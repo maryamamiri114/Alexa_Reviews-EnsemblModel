@@ -7,12 +7,17 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.naive_bayes import BernoulliNB, MultinomialNB
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
 from sklearn.metrics import roc_auc_score, accuracy_score
 from sklearn.pipeline import Pipeline
 from sklearn.neural_network import MLPClassifier
+from imblearn.over_sampling import SMOTE
+from sklearn.svm import LinearSVC, SVC
+from sklearn.model_selection import ShuffleSplit
+from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import learning_curve
 
 from bs4 import BeautifulSoup
 import re
@@ -50,19 +55,6 @@ from pprint import pprint
 import warnings
 
 warnings.filterwarnings(action='ignore')
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split
-from imblearn.over_sampling import SMOTE
-from sklearn.naive_bayes import BernoulliNB, MultinomialNB
-from sklearn.linear_model import LogisticRegression, SGDClassifier, passive_aggressive
-from sklearn.svm import LinearSVC, SVC
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.neural_network import MLPClassifier
-from sklearn.model_selection import ShuffleSplit
-from sklearn.metrics import accuracy_score, f1_score
-from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import cross_validate
-from sklearn.model_selection import learning_curve
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -100,15 +92,8 @@ plt.show()
 cv = ShuffleSplit(n_splits=20, test_size=0.2)
 
 models = [
-    MultinomialNB(),
-    BernoulliNB(),
-    LogisticRegression(),
-    SGDClassifier(),
     LinearSVC(C=0.1, max_iter=500),
-    # SVC(kernel='rbf'),
-    SVC(),
-    RandomForestClassifier(),
-    MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='relu', solver='adam', alpha=0.0001, max_iter=500)
+    SVC(kernel='rbf')
 ]
 
 sm = SMOTE()
